@@ -1,5 +1,7 @@
 import Express from 'express.oi'
-import Test from './test'
+import Posts from './posts'
+import PostListener from './listeners/posts'
+import Thinky from '../db/connection'
 
 export default class {
   constructor() {
@@ -12,11 +14,16 @@ export default class {
     let port = process.env.PORT || 3000;
     console.log(`Starting server on ${port}`);
     this.server.listen(port);
-    this.mapRoutes()
+    this.mapRoutes();
+    this.mapListeners();
   }
 
   mapRoutes() {
-    let test = new Test(this.server)
+    new Posts(this.server)
+  }
+
+  mapListeners() {
+    new PostListener(this.server)
   }
 
 }
