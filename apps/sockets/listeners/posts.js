@@ -2,7 +2,6 @@ import Post from '../models/post'
 
 export default class {
   constructor(server) {
-    console.log("HELLO WORLD?")
     this.server = server
     let self = this
     Post.changes().then(function(feed) {

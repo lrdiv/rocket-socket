@@ -1,7 +1,12 @@
 import Express from 'express.oi'
-import Posts from './posts'
+import Session from 'express-session'
+import SharedSession from 'express-socket.io-session'
+import Posts from './routes/posts'
+import Auth from './routes/auth'
 import PostListener from './listeners/posts'
 import Thinky from '../db/connection'
+
+
 
 export default class {
   constructor() {
@@ -11,6 +16,11 @@ export default class {
 
   start() {
     this.server.http().io();
+    this.server.io.session({
+      secret: process.env.SECRET || 'this is just a random secret for now',
+      resave: false,
+      saveUninitialized: true
+    });
     let port = process.env.PORT || 3000;
     console.log(`Starting server on ${port}`);
     this.server.listen(port);
@@ -19,7 +29,8 @@ export default class {
   }
 
   mapRoutes() {
-    new Posts(this.server)
+    new Posts(this.server);
+    new Auth(this.server);
   }
 
   mapListeners() {
