@@ -14,7 +14,7 @@ export default class {
           }
 
           if (!user) {
-            res.json({cod: 401, status: 'error', error: 'Invalid Username'})
+            res.json({code: 401, status: 'error', error: 'Invalid Username'})
           }
           else {
             req.socket.handshake.session.token = user.token;
